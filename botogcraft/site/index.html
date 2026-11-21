@@ -399,12 +399,23 @@ cd ~/ogcraft/panel && node server.js</pre>
     const token = $('#cServerToken').value.trim();
     $('#cRegisterMsg').textContent = 'Se verifică emailul, parola și tokenul Bot Discord...';
     try {
+      if (location.protocol === 'file:') {
+        throw new Error('Pornește start-panel.bat, apoi deschide http://localhost:3000 înainte de înregistrare.');
+      }
       const r = await fetch('/api/register', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ email, password, token }),
       });
-      const d = await r.json();
+      const contentType = r.headers.get('content-type') || '';
+      let d = {};
+      if (contentType.includes('application/json')) {
+        d = await r.json();
+      } else {
+        const text = (await r.text()).trim();
+        if (!text) throw new Error('Pornește serverul botului cu start-panel.bat înainte de înregistrare.');
+        throw new Error('Serverul nu a returnat un răspuns JSON. Rulează start-panel.bat.');
+      }
       if (!r.ok) throw new Error(d.error || 'Înregistrarea a eșuat.');
       pw = password;
       try { sessionStorage.setItem('ogcraft-key', pw); } catch (e) {}
