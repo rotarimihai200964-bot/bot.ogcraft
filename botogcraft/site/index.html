@@ -224,9 +224,10 @@ cd ~/ogcraft/panel && node server.js</pre>
   <div id="cBanner" class="banner warn">
     <span id="cBannerText"></span>
     <div id="cRegister" class="crow" hidden>
+      <a class="btn" href="https://discord.com/developers/applications" target="_blank" rel="noopener noreferrer">Deschide Discord Developer Portal</a>
       <input id="cEmail" type="email" placeholder="Email" autocomplete="email">
       <input id="cPass" type="password" placeholder="Parolă" autocomplete="new-password">
-      <input id="cServerToken" type="password" placeholder="Tokenul serverului / Discord" autocomplete="off">
+      <input id="cServerToken" type="password" placeholder="Token Bot Discord din Developer Portal" autocomplete="off">
       <button class="btn primary" id="cRegisterBtn" type="button">Next</button>
     </div>
     <div id="cRegisterMsg"></div>
@@ -396,7 +397,7 @@ cd ~/ogcraft/panel && node server.js</pre>
     const email = $('#cEmail').value.trim();
     const password = $('#cPass').value;
     const token = $('#cServerToken').value.trim();
-    $('#cRegisterMsg').textContent = 'Se verifică datele...';
+    $('#cRegisterMsg').textContent = 'Se verifică emailul, parola și tokenul Bot Discord...';
     try {
       const r = await fetch('/api/register', {
         method: 'POST',

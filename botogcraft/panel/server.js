@@ -185,7 +185,7 @@ const server = http.createServer(async (req, res) => {
       const token = String(body.token || '').trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return send(400, { error: 'Email invalid.' });
       if (password.length < 6) return send(400, { error: 'Parola trebuie să aibă cel puțin 6 caractere.' });
-      if (token.length < 30 || /\s/.test(token)) return send(400, { error: 'Tokenul Discord nu arată corect.' });
+      if (token.length < 30 || /\s/.test(token)) return send(400, { error: 'Tokenul Bot Discord nu arată corect. Ia-l din Developer Portal → aplicația ta → Bot → Reset Token.' });
       let app;
       try { app = await verifyToken(token); }
       catch (e) { return send(502, { error: 'Nu m-am putut conecta la Discord. Verifică internetul.' }); }
