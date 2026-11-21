@@ -10,6 +10,13 @@ panel/ server local: servește site-ul + token și Start/Stop/Restart
 site/  index.html (site cu animații) + portal.html (trimite în Discord Developer Portal)
 ```
 
+## Monitor și panou online
+
+- `mc.ogcraft-rpg.com` este monitorizat la fiecare 5 minute în [status.json](status.json).
+- Workflow-ul `.github/workflows/ogcraft-status.yml` actualizează statusul Minecraft automat pe GitHub Actions.
+- [panel/server.js](panel/server.js) expune `/api/public-status` pentru status fără token Discord și actualizează Minecraft la 5 minute.
+- GitHub Pages poate publica UI-ul static, dar botul Discord și panoul Start/Stop/Restart necesită un Node.js server 24/7 (local, VPS sau hosting Node).
+
 ## Bot
 
 1. Creează aplicația în [Discord Developer Portal](https://discord.com/developers/applications) (sau deschide `site/portal.html`).

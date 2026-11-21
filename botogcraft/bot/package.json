@@ -4,7 +4,8 @@
   "description": "OGCraft - bot de Discord",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "install-deps": "npm install"
   },
   "engines": {
     "node": ">=18"

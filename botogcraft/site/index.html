@@ -94,7 +94,7 @@ pre.cmd{margin:0;padding:16px;overflow-x:auto;border-radius:16px;background:#070
 footer{position:relative;z-index:1;padding:32px 24px calc(32px + env(safe-area-inset-bottom,0px));text-align:center;color:var(--muted);font-size:14px;border-top:1px solid var(--glass-b)}
 
 /* fereastra Create bot */
-dialog#create{width:min(620px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;box-sizing:border-box;padding:26px;border-radius:28px;background:var(--pop);color:var(--text);border:1px solid var(--glass-b);box-shadow:0 40px 100px -20px rgba(0,0,0,.6)}
+dialog#create{width:min(520px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;box-sizing:border-box;padding:24px;border-radius:18px;background:color-mix(in srgb,var(--pop) 94%,transparent);color:var(--text);border:1px solid var(--glass-b);box-shadow:0 32px 90px -28px rgba(0,0,0,.75)}
 dialog#create::backdrop{background:rgba(5,10,20,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .cbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
 .cbar h2{margin:0;font-size:26px}
@@ -102,6 +102,7 @@ dialog#create::backdrop{background:rgba(5,10,20,.6);-webkit-backdrop-filter:blur
 .banner.warn{background:rgba(251,191,36,.16);border:1px solid rgba(251,191,36,.5)}
 .banner.okb{background:rgba(52,211,153,.14);border:1px solid rgba(52,211,153,.45)}
 .banner .crow{margin-top:10px}
+.setup-intro{margin:2px 0 14px;color:var(--muted);font-size:14px}.register-grid{display:grid;gap:10px}.register-field{display:grid;gap:6px}.register-field label{font-size:13px;font-weight:700}.register-grid a.btn{width:max-content;min-height:42px;padding:0 16px;font-size:14px}.register-actions{display:flex;justify-content:flex-end;margin-top:2px}.register-actions .btn{min-width:132px}.setup-divider{height:1px;margin:14px 0;background:var(--glass-b)}
 #cRegisterMsg{margin-top:6px;font-weight:600}
 .cstep{display:flex;gap:16px;padding:20px 0 4px}
 .cstep>span{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--g);color:#052e16;font:700 15px Sora,sans-serif}
@@ -112,10 +113,11 @@ dialog#create::backdrop{background:rgba(5,10,20,.6);-webkit-backdrop-filter:blur
 #create p a{color:var(--accent-text);font-weight:600}
 #create code{font-size:13px}
 .crow{display:flex;flex-wrap:wrap;gap:10px}
-#create input{flex:1 1 200px;min-width:0;box-sizing:border-box;min-height:50px;padding:0 16px;border-radius:16px;font:inherit;color:var(--text);background:var(--input);border:1px solid var(--glass-b)}
+#create input{flex:1 1 200px;min-width:0;box-sizing:border-box;min-height:52px;padding:0 14px;border-radius:10px;font:inherit;color:var(--text);background:var(--input);border:1px solid var(--glass-b);transition:border-color .18s,box-shadow .18s,background .18s}#create input:focus{border-color:#22d3ee;box-shadow:0 0 0 3px rgba(34,211,238,.12);background:var(--pop)}
 #create input:disabled{opacity:.55}
 .cpill{display:inline-block;margin-left:8px;padding:2px 12px;border-radius:999px;font:600 13px Inter,sans-serif;background:rgba(248,113,113,.22)}
 .cpill.on{background:rgba(52,211,153,.28)}
+.cstatus-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:6px}.cstatus-card{min-width:0;padding:10px 12px;border:1px solid var(--glass-b);border-radius:10px;background:var(--input)}.cstatus-card span{display:block;color:var(--muted);font-size:11px}.cstatus-card b{display:block;margin-top:2px;font-size:13px}.status-online{color:#16a34a}.status-offline{color:#dc2626}
 #cMsg{min-height:24px;margin-top:12px;font-weight:600;font-size:15px}
 #cLogs{margin:12px 0 0;height:200px;overflow:auto;padding:14px;border-radius:16px;background:#070b12;color:#c9d6ea;font:12.5px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;word-break:break-word}
 
@@ -132,7 +134,7 @@ dialog#create::backdrop{background:rgba(5,10,20,.6);-webkit-backdrop-filter:blur
   *,*::before,*::after{animation:none!important;transition:none!important}
   .js .rv{opacity:1;transform:none}
 }
-@media (max-width:640px){.hero{padding:48px 0 96px}.cstep{gap:12px}}
+@media (max-width:640px){.hero{padding:48px 0 96px}.cstep{gap:12px}dialog#create{padding:16px}.register-actions .btn{width:100%}.setup-intro{font-size:13px}}
 </style>
 </head>
 <body>
@@ -142,10 +144,8 @@ dialog#create::backdrop{background:rgba(5,10,20,.6);-webkit-backdrop-filter:blur
     <div class="logo"><img src="../../assets/logo.png" alt="Logo OGCraft">OGCraft</div>
     <div class="links">
       <a href="#comenzi">Comenzi</a>
-      <a href="#adauga">Cum îl adaugi</a>
-      <a href="#ghid">Ghid</a>
       <button class="btn icon-btn" id="theme" type="button" aria-label="Schimbă între zi și noapte">◐</button>
-      <a class="btn primary" href="#ghid" data-create>Create bot</a>
+      <a class="btn primary" href="#" data-create>Create bot</a>
     </div>
   </nav>
 
@@ -155,7 +155,7 @@ dialog#create::backdrop{background:rgba(5,10,20,.6);-webkit-backdrop-filter:blur
       <h1 class="hi" style="animation-delay:.1s">Minecraft, <span class="gt">direct pe Discord.</span></h1>
       <p class="lead hi" style="animation-delay:.2s">OGCraft verifică statusul serverului, arată jucătorii conectați, oprește spam-ul și răspunde la întrebări cu AI.</p>
       <div class="row hi" style="animation-delay:.3s">
-        <a class="btn primary" href="#ghid" data-create>Create bot</a>
+        <a class="btn primary" href="#" data-create>Create bot</a>
         <a class="btn" href="#comenzi">Vezi comenzile</a>
       </div>
       <div class="ip-pill hi" style="animation-delay:.4s">
@@ -180,63 +180,22 @@ dialog#create::backdrop{background:rgba(5,10,20,.6);-webkit-backdrop-filter:blur
     </div>
   </section>
 
-  <section id="adauga">
-    <h2 class="rv">Cum îl adaugi</h2>
-    <p class="sub rv">Trei pași și botul e pe serverul tău.</p>
-    <div class="grid">
-      <div class="step rv"><span>1</span><p>Apasă pe Create bot, pune tokenul botului și pornește-l din panoul de control.</p></div>
-      <div class="step rv"><span>2</span><p>După ce botul e creat, invită-l pe serverul tău cu <a data-invite href="https://discord.com/oauth2/authorize?client_id=CLIENT_ID_AICI&amp;permissions=1099511720960&amp;scope=bot+applications.commands">linkul de invitație</a> și acceptă permisiunile.</p></div>
-      <div class="step rv"><span>3</span><p>Scrie / în orice canal și alege o comandă OGCraft.</p></div>
-    </div>
-  </section>
-
-  <section id="ghid">
-    <h2 class="rv">Creează botul</h2>
-    <p class="sub rv">Pentru admini: de la aplicația din Discord la un bot pornit.</p>
-    <div class="grid">
-      <div class="step rv"><span>1</span><p>Deschide Discord Developer Portal și conectează-te cu contul tău Discord.</p></div>
-      <div class="step rv"><span>2</span><p>Apasă pe New Application și numește aplicația ogcraft.</p></div>
-      <div class="step rv"><span>3</span><p>La tab-ul Bot apasă Reset Token și păstrează tokenul secret.</p></div>
-      <div class="step rv"><span>4</span><p>Apasă Create bot, lipește tokenul și pornește botul.</p></div>
-    </div>
-    <div class="row rv" style="margin-top:28px">
-      <a class="btn primary" href="#ghid" data-create>Create bot</a>
-      <a class="btn" href="https://discord.com/developers/applications" target="_blank" rel="noopener noreferrer">Discord Developer Portal</a>
-    </div>
-    <div class="card note rv">
-      <h3>Cum funcționează Create bot</h3>
-      <p>Tokenul, Start, Stop și Restart funcționează doar când site-ul este deschis de pe serverul care rulează botul, adică după ce pornești <code>server.js</code>. Pe un link static ca acesta fereastra se deschide, dar îți spune că nu e conectată la un server. Tokenul se introduce doar pe un site protejat cu parolă, servit de serverul botului.</p>
-      <p><strong>Calculator Windows:</strong> dezarhivează ogcraft-repo.zip, dă dublu-click pe start-panel.bat și deschide http://localhost:3000.</p>
-      <p><strong>Telefon Android:</strong> instalează Termux din F-Droid și rulează în el comenzile de mai jos. Apoi deschide http://localhost:3000 în Chrome: este tot acest site, cu Create bot funcțional.</p>
-      <pre class="cmd">pkg update -y && pkg install -y nodejs unzip
-termux-setup-storage
-unzip ~/storage/downloads/ogcraft-repo.zip -d ~
-cd ~/ogcraft/bot && npm install
-termux-wake-lock
-cd ~/ogcraft/panel && node server.js</pre>
-    </div>
-  </section>
 </div>
 
 <dialog id="create" aria-labelledby="cTitle">
-  <div class="cbar"><h2 id="cTitle">Create bot</h2><button class="btn icon-btn" id="cClose" type="button" aria-label="Închide">✕</button></div>
+  <div class="cbar"><h2 id="cTitle">Panou Discord bot</h2><button class="btn icon-btn" id="cClose" type="button" aria-label="Închide">✕</button></div>
 
-  <div id="cBanner" class="banner warn">
-    <span id="cBannerText"></span>
-    <div id="cRegister" class="crow" hidden>
-      <a class="btn" href="https://discord.com/developers/applications" target="_blank" rel="noopener noreferrer">Deschide Discord Developer Portal</a>
-      <input id="cEmail" type="email" placeholder="Email" autocomplete="email">
-      <input id="cPass" type="password" placeholder="Parolă" autocomplete="new-password">
-      <input id="cServerToken" type="password" placeholder="Token Bot Discord din Developer Portal" autocomplete="off">
-      <button class="btn primary" id="cRegisterBtn" type="button">Next</button>
+  <div id="cApp">
+    <div id="cStatusGrid" class="cstatus-grid">
+      <div class="cstatus-card"><span>Discord bot</span><b id="cDiscordStatus">Se verifică</b></div>
+      <div class="cstatus-card"><span>Minecraft</span><b id="cMinecraftStatus">Se verifică</b></div>
+      <div class="cstatus-card"><span>Ultima verificare</span><b id="cCheckedStatus">--</b></div>
     </div>
-    <div id="cRegisterMsg"></div>
-  </div>
-
-  <div id="cApp" hidden>
     <div class="cstep"><span>1</span><div>
-      <h3>Bot Discord</h3>
-      <p>Tokenul și aplicația sunt configurate. Gestionează invitarea botului pe serverul tău de Discord.</p>
+      <h3>Token Discord</h3>
+      <p>Obține tokenul din Discord Developer Portal → aplicația ta → Bot → Reset Token.</p>
+      <div class="crow"><input id="cPanelPass" type="password" placeholder="Parola panoului" autocomplete="current-password"><button class="btn" id="cLogin" type="button">Conectează</button></div>
+      <div class="crow" style="margin-top:8px"><input id="cToken" type="password" placeholder="Tokenul botului Discord" autocomplete="off"><button class="btn primary" id="cSave" type="button">Salvează</button></div>
       <p id="cTokenState" style="margin:8px 0 0"></p>
     </div></div>
     <div class="cstep"><span>2</span><div>
@@ -333,15 +292,7 @@ cd ~/ogcraft/panel && node server.js</pre>
   const say = (t, ok) => { const m = $('#cMsg'); m.textContent = t; m.style.color = ok ? 'var(--accent-text)' : 'inherit'; };
 
   function setConn(c) {
-    const b = $('#cBanner');
-    b.className = 'banner ' + (c === 'ok' ? 'okb' : 'warn');
-    $('#cBannerText').textContent = c === 'ok'
-      ? '● Conectat la serverul botului'
-      : c === 'auth'
-        ? 'Înregistrează-te pentru a configura și controla botul.'
-        : '⚠ Neconectat la un server de bot. Pornește server.js și deschide site-ul de la adresa lui.';
-    $('#cRegister').hidden = c !== 'auth';
-    $('#cApp').hidden = c !== 'ok';
+    $('#cApp').hidden = false;
     if (c !== 'ok') gated.forEach((s) => { $(s).disabled = true; });
   }
 
@@ -358,11 +309,54 @@ cd ~/ogcraft/panel && node server.js</pre>
     return d;
   }
 
+  async function refreshPublicStatus() {
+    try {
+      let data;
+      if (location.protocol !== 'file:' && location.hostname) {
+        const response = await fetch('/api/public-status', { headers: { Accept: 'application/json' } });
+        if (response.ok) data = await response.json();
+      }
+      if (!data) {
+        for (const statusUrl of ['status.json', '../status.json']) {
+          try {
+            const response = await fetch(statusUrl, { headers: { Accept: 'application/json' }, cache: 'no-store' });
+            if (response.ok) { data = await response.json(); break; }
+          } catch (error) {}
+        }
+      }
+      if (data?.minecraft) {
+        $('#cMinecraftStatus').textContent = data.minecraft.online === true
+          ? 'Online · ' + (data.minecraft.players ?? 0) + '/' + (data.minecraft.maxPlayers ?? '?')
+          : data.minecraft.online === false ? 'Offline' : 'Se verifică';
+        $('#cMinecraftStatus').className = data.minecraft.online === true ? 'status-online' : data.minecraft.online === false ? 'status-offline' : '';
+      }
+      if (data?.discord?.online != null) {
+        $('#cDiscordStatus').textContent = data.discord.online ? 'Online' : 'Offline';
+        $('#cDiscordStatus').className = data.discord.online ? 'status-online' : 'status-offline';
+      }
+      if (data?.minecraft?.checkedAt) {
+        $('#cCheckedStatus').textContent = new Date(data.minecraft.checkedAt).toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' });
+      }
+    } catch (error) {
+      // Status.json și API-ul public sunt opționale pe site-uri statice.
+    }
+  }
+
   async function refresh() {
+    await refreshPublicStatus();
     try {
       const s = await api('status');
       setConn('ok');
       $('#cPill').textContent = s.running ? 'Pornit · ' + Math.floor(s.uptime / 60) + ' min' : 'Oprit';
+      $('#cDiscordStatus').textContent = s.discord?.online ? 'Online' : 'Offline';
+      $('#cDiscordStatus').className = s.discord?.online ? 'status-online' : 'status-offline';
+      $('#cMinecraftStatus').textContent = s.minecraft?.online
+        ? 'Online · ' + (s.minecraft.players ?? 0) + '/' + (s.minecraft.maxPlayers ?? '?')
+        : 'Offline';
+      $('#cMinecraftStatus').className = s.minecraft?.online ? 'status-online' : 'status-offline';
+      $('#cCheckedStatus').textContent = s.checkedAt
+        ? new Date(s.checkedAt).toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' })
+        : '--';
       $('#cPill').className = 'cpill' + (s.running ? ' on' : '');
       $('#cTokenState').textContent = s.tokenSet ? '✓ Token salvat' + (s.name ? ' pentru ' + s.name : '') : 'Niciun token salvat încă.';
       const inv = $('#cInvite');
@@ -378,6 +372,7 @@ cd ~/ogcraft/panel && node server.js</pre>
       if (stick) pre.scrollTop = pre.scrollHeight;
     } catch (e) {
       setConn(e.message === 'auth' ? 'auth' : 'offline');
+      say(e.message === 'auth' ? '⚠ Introdu parola panoului afișată în consola serverului.' : '⚠ Serverul panoului este offline pe localhost:3000.', false);
     }
   }
 
@@ -387,6 +382,7 @@ cd ~/ogcraft/panel && node server.js</pre>
     refresh();
     clearInterval(timer);
     timer = setInterval(refresh, 2000);
+    setInterval(refresh, 5 * 60 * 1000);
   }
   document.querySelectorAll('[data-create]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); openCreate(); }));
   $('#cClose').addEventListener('click', () => dlg.close());
@@ -428,6 +424,28 @@ cd ~/ogcraft/panel && node server.js</pre>
     }
   });
   $('#cServerToken')?.addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#cRegisterBtn')?.click(); });
+
+  $('#cLogin').addEventListener('click', async () => {
+    pw = $('#cPanelPass').value;
+    try { sessionStorage.setItem('ogcraft-key', pw); } catch (e) {}
+    say('Se conectează la panou...');
+    await refresh();
+  });
+  $('#cPanelPass').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#cLogin').click(); });
+
+  $('#cSave').addEventListener('click', async () => {
+    const token = $('#cToken').value.trim();
+    if (!token) { say('Lipește mai întâi tokenul Discord.'); return; }
+    say('Se verifică tokenul la Discord...');
+    try {
+      const d = await api('token', { token });
+      $('#cToken').value = '';
+      say('✓ Token valid pentru ' + d.name + '.', true);
+    } catch (e) {
+      say(e.message === 'auth' ? '⚠ Parola panoului lipsește sau nu este corectă.' : '⚠ ' + e.message);
+    }
+    refresh();
+  });
 
   const act = async (n) => {
     say('Se execută...');

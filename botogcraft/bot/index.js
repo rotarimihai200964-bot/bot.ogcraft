@@ -12,7 +12,7 @@ const {
 } = require('discord.js');
 
 const { DISCORD_TOKEN, CLIENT_ID, GUILD_ID } = process.env;
-const MC_SERVER = process.env.MC_SERVER || 'ogcraft.mc-gravel.com';
+const MC_SERVER = process.env.MC_SERVER || 'mc.ogcraft-rpg.com';
 const COLOR = 0x55ff55;
 const { ANTHROPIC_API_KEY } = process.env;
 const AI_MODEL = process.env.AI_MODEL || 'claude-haiku-5-5';

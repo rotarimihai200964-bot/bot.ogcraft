@@ -80,6 +80,54 @@ let child = null;
 let startedAt = null;
 let botName = null;
 const logs = [];
+const MC_IP = process.env.MC_SERVER || 'mc.ogcraft-rpg.com';
+let minecraftStatus = {
+  ip: MC_IP,
+  online: null,
+  players: null,
+  maxPlayers: null,
+  version: null,
+  motd: null,
+  checkedAt: null,
+  error: null,
+};
+
+async function refreshMinecraftStatus() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const response = await fetch('https://api.mcsrvstat.us/3/' + encodeURIComponent(MC_IP), { signal: controller.signal });
+    if (!response.ok) throw new Error('Status API HTTP ' + response.status);
+    const data = await response.json();
+    minecraftStatus = {
+      ip: MC_IP,
+      online: data.online === true,
+      players: data.players?.online ?? 0,
+      maxPlayers: data.players?.max ?? null,
+      version: data.version || null,
+      motd: data.motd?.clean?.join(' ') || null,
+      checkedAt: new Date().toISOString(),
+      error: null,
+    };
+  } catch (error) {
+    minecraftStatus = {
+      ip: MC_IP,
+      online: false,
+      players: 0,
+      maxPlayers: null,
+      version: null,
+      motd: null,
+      checkedAt: new Date().toISOString(),
+      error: error.name === 'AbortError' ? 'Verificarea a expirat.' : error.message,
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+  return minecraftStatus;
+}
+
+refreshMinecraftStatus();
+setInterval(refreshMinecraftStatus, 5 * 60 * 1000);
 
 function log(text) {
   const token = readEnv().DISCORD_TOKEN;
@@ -139,6 +187,13 @@ function status() {
     invite: clientId
       ? 'https://discord.com/oauth2/authorize?client_id=' + clientId + '&permissions=' + PERMISSIONS + '&scope=bot+applications.commands'
       : null,
+    discord: {
+      online: !!child,
+      uptimeSeconds: startedAt ? Math.floor((Date.now() - startedAt) / 1000) : 0,
+      name: botName,
+    },
+    minecraft: minecraftStatus,
+    checkedAt: new Date().toISOString(),
     logs: logs.slice(-200),
   };
 }
@@ -165,6 +220,14 @@ const server = http.createServer(async (req, res) => {
   if (HOST === '127.0.0.1' && !/^(localhost|127\.0\.0\.1)(:\d+)?$/.test(req.headers.host || '')) return send(403, { error: 'Host nepermis.' });
 
   const url = new URL(req.url, 'http://localhost');
+  if (req.method === 'GET' && url.pathname === '/api/public-status') {
+    const env = readEnv();
+    return send(200, {
+      discord: { online: !!child, uptimeSeconds: startedAt ? Math.floor((Date.now() - startedAt) / 1000) : 0, configured: !!(env.DISCORD_TOKEN && env.DISCORD_TOKEN.length > 30) },
+      minecraft: minecraftStatus,
+      checkedAt: new Date().toISOString(),
+    });
+  }
   if (req.method === 'GET' && url.pathname === '/') {
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
     return res.end(fs.readFileSync(path.join(__dirname, '..', 'site', 'index.html')));
